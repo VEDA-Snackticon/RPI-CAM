@@ -16,7 +16,8 @@ namespace video{
         GMainLoop *main_loop;
         std::string pipeline;
         const config::VideoConfig* _video_config;
-        
+        GstRTSPAuth *auth;
+
     public:
         VideoStreamerGST();
         ~VideoStreamerGST();

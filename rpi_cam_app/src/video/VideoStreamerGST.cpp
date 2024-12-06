@@ -45,6 +45,25 @@ void VideoStreamerGST::make_server(){
         // 메인 루프 생성
         main_loop = g_main_loop_new(NULL, FALSE);
 
+        // RTSP 통신 TLS로 보호
+        const config::HttpConfig* http = config::ProgramConfig::get_instance()->http_config();
+        const std::string& crt_file_path = http->crt_file();
+        const std::string& private_file_path = http->private_file();
+        
+        auth = gst_rtsp_auth_new();
+        GTlsCertificate *certificate = NULL;
+        GError *error = NULL;
+
+        certificate = g_tls_certificate_new_from_files(crt_file_path.c_str(), private_file_path.c_str(), &error);
+
+        if (error) {
+            spdlog::error("Failed to get TLS certificate: {}", error->message);
+            g_error_free(error);
+        }
+
+        gst_rtsp_auth_set_tls_certificate(auth, certificate);
+
+
         // 마운트 포인트 생성
         mountPoint = gst_rtsp_server_get_mount_points(rtsp_server);
 
