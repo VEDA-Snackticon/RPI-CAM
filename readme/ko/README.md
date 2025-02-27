@@ -112,7 +112,7 @@ make -j$(nproc)
   }
   ```
 
-  `/home/root`에 `config.json`, 소스코드를 빌드한 결과불을 위치 시킨 후 수행
+  `/home/root`에 `config.json`, 소스코드를 빌드한 결과물, `event`이름의 디렉터리 들을 위치 시킨 후 수행
 
 ## 구조
 
